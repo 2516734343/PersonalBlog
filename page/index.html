@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>前端小辣椒</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="js/axios.js"></script>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <a href="/" class="title">我的个人博客 | 技术博客</a>
+        <ul class="menu">
+            <li><a href="/">首页</a></li>
+            <li><a href="/page/sitemap.html">地图</a></li>
+            <li><a href="/page/about.html">关于</a></li>
+            <li><a href="/page/guestBook.html">留言</a></li>
+        </ul>
+<!--        <div class="searchBar" id="search">-->
+<!--            <input type="text" placeholder="请输入查找关键词">-->
+<!--            <button v-on:click="sendSearch">搜索</button>-->
+<!--        </div>-->
+    </div>
+</header>
+<div class="content">
+    <div class="content_left">
+        <div class="every_day" id="every_day">
+            <span>每日一句</span>
+            <p v-html="getContent"></p>
+        </div>
+        <div class="article_list" id="article_list">
+            <div class="article" v-for="article in  articleList">
+                <a :href="article.link" class="article_title">{{article.title}}</a>
+                <p class="article_content">
+                 {{article.content}}
+                </p>
+                <div class="article_foot">发布于{{article.date}} |  浏览({{article.views}}) | Tags：{{article.tags}}</div>
+            </div>
+            <div class="page_tool">
+                <ul>
+                    <li v-for="pageNum in pageNumList" v-on:click="jumpTo(pageNum.page)" :class="{now_page:(pageNum.text == page)}">{{pageNum.text}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content_right">
+        <div class="right_module" id="randomTags">
+            <div>随机标签云</div>
+            <a v-for="tag in tags" v-bind:style="{color:randomColor(), fontSize:randomSize()}" v-bind:href="tag.link">{{tag.text}}</a>
+        </div>
+        <div class="right_module" id="new_hot">
+            <div>最近热门</div>
+            <ul>
+                <li v-for="temp in titleList">
+                    <a v-bind:href="temp.link">{{temp.title}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right_module" id="new_comments">
+            <div>最新评论</div>
+            <ul>
+                <li v-for="comment in commentList">
+                    <div>
+                        <span>{{comment.name}}</span>
+                        <span class="pull_right">{{comment.date}}</span>
+                    </div>
+                    <p>{{comment.comment}}</p>
+                </li>
+
+            </ul>
+        </div>
+        <div class="right_module">
+            <div>友情链接</div>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104771498">vue美团项目开发问题总结</a></span>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104591481">MVVM原理之初始化data对象</a></span>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104561307">字节跳动一二面面经</a></span>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104499675">字节网上面经整理（100道面试题）</a></span>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104401869">防抖、节流、柯里化</a></span>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104380888">手写源代码（一）——set&map</a></span>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104399957">手写源代码（二）——bind原理</a></span>
+            <span><a href="https://blog.csdn.net/qq_40619263/article/details/104416322">手写源代码（三）——promise原理</a></span>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <ul>
+        <li>面试总结</li>
+        <li>JavaScript</li>
+        <li>vue</li>
+        <li>react</li>
+        <li>学习经验</li>
+        <li>node</li>
+        <li>北漂</li>
+    </ul>
+    <p>最终解释权归前端小辣椒所有</p>
+</footer>
+
+<script src="js/index.js"></script>
+<script src="js/base.js"></script>
+
+</body>
+</html>
